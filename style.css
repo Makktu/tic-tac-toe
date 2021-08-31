@@ -1,3 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+
 * {
     box-sizing: border-box;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+body {
+    background-color: darkcyan;
+    color: wheat;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* margin: 10px; */
+    border: 1px blue;
+    height: 90vh;
+    width: 100vw;
+}
+
+.heading {
+    font-size: 2.5rem;
+    border: 4px dotted wheat;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.messages {
+    /* border: 1px solid yellow; */
+    height: 4rem;
+    width: 27rem;
+    display: flex;
+    margin: 1vh 0;
+    line-height: 4rem;
+    text-align: center;
+}
+
+button {
+    border-radius: 5px;
+    font-size: 1.25rem;
+    cursor: pointer;
+    background-color: rgb(10, 160, 63);
+    transition: 0.5s ease;
+}
+
+button:hover {
+    background-color: yellowgreen;
+    transition: 0.5s ease;
+}
+
+.updates {
+    /* border: 1px solid pink; */
+    height: 4rem;
+    width: 27rem;
+    font-size: 2.5rem;
+    color: yellowgreen;
+}
+
+.game__area {
+    /* border: 1px solid red; */
+    height: 27rem;
+    width: 27rem;
+    margin-top: 1vh;
+}
+
+.game__area img {
+    width: 100%;
+    height: 100%;
 }
