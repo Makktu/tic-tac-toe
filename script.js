@@ -1,10 +1,61 @@
 "use strict";
 
-function updateBoard(squareClickedOn) {
-    console.log(squareClickedOn);
-    gameSquares.forEach(square, (ind) => {
-        square.textContent = Gameboard[ind];
+function newGame() {
+    whoseTurnItIs = "X";
+    Gameboard = {
+        sq1: "",
+        sq2: "",
+        sq3: "",
+        sq4: "",
+        sq5: "",
+        sq6: "",
+        sq7: "",
+        sq8: "",
+        sq9: "",
+    };
+    refreshBoard();
+}
+
+function checkForWin() {
+    // winning patterns are:
+    // 123, 456, 789, 147, 258, 369, 159, 357
+    winningConditions.forEach((winCon) => {
+        for (let k = 1; k < 4; k++) {
+            let win1 = parseInt(winCon.toString()[0]);
+            let win2 = parseInt(winCon.toString()[1]);
+            let win3 = parseInt(winCon.toString()[2]);
+            // check for the SAME CHARACTER present in all
+            if (Gameboard[`sq${win1}`] === "") break;
+            if (
+                Gameboard[`sq${win1}`] === Gameboard[`sq${win2}`] &&
+                Gameboard[`sq${win2}`] === Gameboard[`sq${win3}`]
+            ) {
+                let winner = Gameboard[`sq${win1}`];
+                console.log(winner, "WINS!");
+                newGame();
+            }
+        }
     });
+}
+
+function refreshBoard() {
+    gameSquares.forEach((square, ind) => {
+        square.textContent = Gameboard[`sq${ind + 1}`];
+    });
+}
+
+function updateBoard(squareClickedOn) {
+    squareClickedOn = squareClickedOn.substring(3);
+    if (Gameboard[`${squareClickedOn}`] === "") {
+        Gameboard[`${squareClickedOn}`] = whoseTurnItIs;
+        whoseTurnItIs === "X" ? (whoseTurnItIs = "O") : (whoseTurnItIs = "X");
+        refreshBoard();
+        if (soundOn) playingSound.play();
+        checkForWin();
+    } else {
+        // put no-move sound in here
+        return;
+    }
 }
 
 function clickLocation(clickLoc) {
@@ -40,21 +91,19 @@ theGrid.addEventListener("click", (e) => {
     clickLocation(e);
 });
 
-const Gameboard = {
-    sq1: "X",
-    sq2: "O",
-    sq3: "O",
-    sq4: "X",
-    sq5: "O",
-    sq6: "X",
-    sq7: "O",
-    sq8: "O",
-    sq9: "O",
+let Gameboard = {
+    sq1: "",
+    sq2: "",
+    sq3: "",
+    sq4: "",
+    sq5: "",
+    sq6: "",
+    sq7: "",
+    sq8: "",
+    sq9: "",
 };
 
 const gameSquares = document.querySelectorAll(".sq");
-
-console.log(gameSquares);
 
 gameSquares.forEach((square) => {
     console.log(square);
@@ -63,4 +112,21 @@ gameSquares.forEach((square) => {
     });
 });
 
-// * set up starting values
+let whoseTurnItIs = "X";
+let soundOn = true;
+
+const playingSound = document.querySelector(".click");
+
+const soundButton = document.querySelector(".sound_control");
+
+soundButton.addEventListener("click", () => {
+    soundOn === true ? (soundOn = false) : (soundOn = true);
+});
+
+const newGameBtn = document.querySelector(".new_game_btn");
+
+newGameBtn.addEventListener("click", newGame);
+
+const winningConditions = [123, 456, 789, 147, 258, 369, 159, 357];
+
+refreshBoard();

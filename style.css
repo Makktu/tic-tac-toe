@@ -46,11 +46,15 @@ button {
     cursor: pointer;
     background-color: rgb(10, 160, 63);
     transition: 0.5s ease;
+    margin-right: 3px;
 }
 
 button:hover {
     background-color: yellowgreen;
     transition: 0.5s ease;
+}
+.sound_control {
+    background-color: skyblue;
 }
 
 .updates {
@@ -99,11 +103,14 @@ button:hover {
     /* z-index: 99999; */
     /* position: relative; */
     cursor: pointer;
+    color: black;
+    line-height: 9rem;
+    font-size: 6rem;
+    text-align: center;
 }
 
-.sq:hover {
-    background: rgb(105, 103, 98);
-    width: 8rem;
-    height: 8rem;
-    transition: 0.6s ease;
-}
+/* .sq:hover {
+    background: rgb(1, 53, 53);
+
+    transition: 0.6s;
+} */
