@@ -11,12 +11,16 @@
     </head>
     <body>
         <audio class="click" src="sounds/playing-turn.mp3"></audio>
+        <audio class="no-move" src="sounds/no-move.mp3"></audio>
+        <audio class="game-won" src="sounds/game-won.wav"></audio>
         <div class="container">
             <div class="heading">TIC-TAC-TOE</div>
             <div class="messages">
                 <button class="new_game_btn">NEW GAME</button>
-                <button class="sound_control">TOGGLE SOUND</button>
                 <div class="updates"></div>
+                <button class="sound_control">
+                    SOUND <span id="#sound-toggle">*ON/off</span>
+                </button>
             </div>
             <div class="game__area">
                 <img class="the__grid" src="img/gameboard.png" />

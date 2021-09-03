@@ -1,5 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
 
+@keyframes update {
+    0% {
+        background-color: darkcyan;
+    }
+    50% {
+        background-color: rgb(9, 12, 0);
+        color: white;
+    }
+    100% {
+        background-color: darkcyan;
+    }
+}
+@keyframes winner {
+    0% {
+        background-color: darkcyan;
+    }
+    50% {
+        background-color: rgb(8, 8, 8);
+        color: white;
+    }
+    100% {
+        background-color: darkcyan;
+    }
+}
+
 * {
     box-sizing: border-box;
     font-family: "Roboto Condensed", sans-serif;
@@ -46,7 +71,8 @@ button {
     cursor: pointer;
     background-color: rgb(10, 160, 63);
     transition: 0.5s ease;
-    margin-right: 3px;
+    margin-right: 8px;
+    width: 15rem;
 }
 
 button:hover {
@@ -55,14 +81,24 @@ button:hover {
 }
 .sound_control {
     background-color: skyblue;
+    margin-left: 8px;
 }
+
+/* .new_game_btn {
+    width: 10rem;
+} */
 
 .updates {
     /* border: 1px solid pink; */
     height: 4rem;
     width: 27rem;
-    font-size: 2.5rem;
-    color: yellowgreen;
+    font-size: 2.8rem;
+    color: rgb(31, 32, 28);
+}
+
+.notify-flash {
+    animation: update 1s;
+    border-radius: 20px;
 }
 
 .game__area {
@@ -107,6 +143,11 @@ button:hover {
     line-height: 9rem;
     font-size: 6rem;
     text-align: center;
+}
+
+.winning-line {
+    /* font-size: 8rem; */
+    animation: update 1s;
 }
 
 /* .sq:hover {

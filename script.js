@@ -13,12 +13,20 @@ function newGame() {
         sq8: "",
         sq9: "",
     };
+    messageArea.textContent = "";
+    turnTaken = 1;
+    messageArea.classList.remove("notify-flash");
+
+    gameSquares.forEach((square) => {
+        if (square.classList.contains("winning-line")) {
+            square.classList.remove("winning-line");
+        }
+    });
+
     refreshBoard();
 }
 
 function checkForWin() {
-    // winning patterns are:
-    // 123, 456, 789, 147, 258, 369, 159, 357
     winningConditions.forEach((winCon) => {
         for (let k = 1; k < 4; k++) {
             let win1 = parseInt(winCon.toString()[0]);
@@ -30,12 +38,31 @@ function checkForWin() {
                 Gameboard[`sq${win1}`] === Gameboard[`sq${win2}`] &&
                 Gameboard[`sq${win2}`] === Gameboard[`sq${win3}`]
             ) {
+                // highlight winning squares here!
+                gameSquares.forEach((square) => {
+                    // stuff
+                    if (square.classList.contains(`sq${win1}`))
+                        square.classList.add("winning-line");
+                    if (square.classList.contains(`sq${win2}`))
+                        square.classList.add("winning-line");
+                    if (square.classList.contains(`sq${win3}`))
+                        square.classList.add("winning-line");
+                });
+                // here !
+
                 let winner = Gameboard[`sq${win1}`];
-                console.log(winner, "WINS!");
-                newGame();
+                messageArea.textContent = `${winner} WINS !`;
+                messageArea.classList.add("notify-flash");
+                if (soundOn) gameWonSound.play();
+                whoseTurnItIs = ""; // prevents further turns (and new move sounds) until NEW GAME clicked
+            }
+
+            if (turnTaken === 10) {
+                messageArea.textContent = "A DRAW...";
             }
         }
     });
+    if (soundOn && whoseTurnItIs) playingSound.play();
 }
 
 function refreshBoard() {
@@ -46,20 +73,22 @@ function refreshBoard() {
 
 function updateBoard(squareClickedOn) {
     squareClickedOn = squareClickedOn.substring(3);
+
+    if (!whoseTurnItIs || Gameboard[`${squareClickedOn}`] !== "") {
+        if (soundOn) noMoveSound.play();
+        return;
+    } // only allows a turn to be taken if the game is not won (the checkForWin function sets variable to "" if winning condition is met)
+
     if (Gameboard[`${squareClickedOn}`] === "") {
         Gameboard[`${squareClickedOn}`] = whoseTurnItIs;
         whoseTurnItIs === "X" ? (whoseTurnItIs = "O") : (whoseTurnItIs = "X");
+        turnTaken++;
         refreshBoard();
-        if (soundOn) playingSound.play();
         checkForWin();
-    } else {
-        // put no-move sound in here
-        return;
     }
 }
 
 function clickLocation(clickLoc) {
-    let theSquareClicked;
     let xRow;
     let yRow;
     const xCoordinate = clickLoc.offsetX;
@@ -80,9 +109,6 @@ function clickLocation(clickLoc) {
     } else if (yCoordinate > 299) {
         yRow = 3;
     } else return;
-
-    // theSquareClicked = xCoordinate;
-    console.log(yRow, xRow);
 }
 
 const theGrid = document.querySelector(".the__grid");
@@ -117,15 +143,31 @@ let soundOn = true;
 
 const playingSound = document.querySelector(".click");
 
+const noMoveSound = document.querySelector(".no-move");
+
+const gameWonSound = document.querySelector(".game-won");
+
 const soundButton = document.querySelector(".sound_control");
 
 soundButton.addEventListener("click", () => {
-    soundOn === true ? (soundOn = false) : (soundOn = true);
+    if (soundOn === true) {
+        soundOn = false;
+        soundToggle.textContent = "on/*OFF";
+    } else {
+        soundOn = true;
+        soundToggle.textContent = "*ON/off";
+    }
 });
 
 const newGameBtn = document.querySelector(".new_game_btn");
 
 newGameBtn.addEventListener("click", newGame);
+
+const soundToggle = document.getElementById("#sound-toggle");
+
+const messageArea = document.querySelector(".updates");
+
+let turnTaken = 1;
 
 const winningConditions = [123, 456, 789, 147, 258, 369, 159, 357];
 
