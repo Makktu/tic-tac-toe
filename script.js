@@ -176,5 +176,3 @@ const theGame = (() => {
 
     refreshBoard();
 })();
-
-// new MainLoop();
